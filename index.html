@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple GPS Spoofer - Mock Location App</title>
+    <meta name="description" content="Simple GPS Spoofer - The easiest way to set fake GPS location on Android. Mock your location for testing, privacy, or location-based apps.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            margin: 20px 0;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #2c3e50, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header .subtitle {
+            font-size: 1.3em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: #2c3e50;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(44, 62, 80, 0.2);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            background: #34495e;
+            box-shadow: 0 15px 30px rgba(44, 62, 80, 0.3);
+        }
+
+        /* Content Sections */
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            margin: 30px 0;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(52, 73, 94, 0.05);
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(52, 73, 94, 0.1);
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            background: rgba(52, 73, 94, 0.08);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .feature p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        /* How it Works */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 15px;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 50%;
+            line-height: 50px;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .step h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        /* Use Cases */
+        .use-cases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .use-case {
+            padding: 25px;
+            background: rgba(118, 75, 162, 0.1);
+            border-radius: 15px;
+            border-left: 4px solid #764ba2;
+        }
+
+        .use-case h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .use-case p {
+            color: #666;
+        }
+
+        /* Important Notice */
+        .notice {
+            background: linear-gradient(45deg, rgba(255, 193, 7, 0.1), rgba(255, 152, 0, 0.1));
+            border: 2px solid rgba(255, 193, 7, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .notice h3 {
+            color: #f57c00;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .notice p {
+            color: #e65100;
+            font-size: 1.1em;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2em;
+            }
+            
+            .header .subtitle {
+                font-size: 1.1em;
+            }
+            
+            .section {
+                padding: 25px;
+            }
+            
+            .features-grid,
+            .steps,
+            .use-cases {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🌍 Simple GPS Spoofer</h1>
+            <p class="subtitle">The easiest way to mock your GPS location on Android</p>
+            <a href="https://play.google.com/store/apps/details?id=com.euneus.fakegps" class="download-btn" target="_blank">
+                📱 Download on Google Play
+            </a>
+        </div>
+
+        <!-- Features Section -->
+        <div class="section">
+            <h2>✨ Key Features</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Easy Location Setting</h3>
+                    <p>Simply enter coordinates or search for any location worldwide to set as your fake GPS position.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🗺️</div>
+                    <h3>Interactive Map</h3>
+                    <p>Use the built-in map interface to visually select your desired location with just a tap.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Activation</h3>
+                    <p>Start location spoofing immediately with one-tap activation. No complex setup required.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Privacy Focused</h3>
+                    <p>Protect your real location while using location-based apps and services.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🎮</div>
+                    <h3>App Testing</h3>
+                    <p>Perfect for developers testing location-based features in their applications.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💾</div>
+                    <h3>Save Favorites</h3>
+                    <p>Save frequently used locations for quick access and easy switching between positions.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- How It Works -->
+        <div class="section">
+            <h2>🛠️ How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Download & Install</h3>
+                    <p>Install Simple GPS Spoofer from Google Play Store on your Android device.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Enable Mock Locations</h3>
+                    <p>Go to Developer Options and select our app as your mock location provider.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Set Your Location</h3>
+                    <p>Enter coordinates or use the map to select where you want to appear to be located.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Start Spoofing</h3>
+                    <p>Activate the fake GPS and all location-based apps will see your chosen position.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Use Cases -->
+        <div class="section">
+            <h2>💡 Common Use Cases</h2>
+            <div class="use-cases">
+                <div class="use-case">
+                    <h3>🧪 App Development</h3>
+                    <p>Test location-based features in your apps without physically traveling to different locations.</p>
+                </div>
+                <div class="use-case">
+                    <h3>🎯 Location-Based Games</h3>
+                    <p>Access game content or features that are geographically restricted or location-dependent.</p>
+                </div>
+                <div class="use-case">
+                    <h3>🔐 Privacy Protection</h3>
+                    <p>Prevent apps from tracking your real location while still providing location data when needed.</p>
+                </div>
+                <div class="use-case">
+                    <h3>🌐 Geo-Restricted Content</h3>
+                    <p>Access region-locked content or services by appearing to be in a different location.</p>
+                </div>
+                <div class="use-case">
+                    <h3>📱 Social Media</h3>
+                    <p>Share posts or check-ins from any location without revealing your actual whereabouts.</p>
+                </div>
+                <div class="use-case">
+                    <h3>🧪 Testing & QA</h3>
+                    <p>Quality assurance testing for location-based app features and functionality.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Important Notice -->
+        <div class="notice">
+            <h3>⚠️ Important Notice</h3>
+            <p>This app is designed for legitimate testing, development, and privacy purposes. Please use responsibly and in accordance with app terms of service and local laws. GPS spoofing may violate some apps' terms of use.</p>
+        </div>
+
+        <!-- Download Section -->
+        <div class="section" style="text-align: center;">
+            <h2>📲 Get Started Today</h2>
+            <p style="font-size: 1.2em; margin-bottom: 30px; color: #666;">
+                Download Simple GPS Spoofer from Google Play and start controlling your location privacy.
+            </p>
+            <a href="https://play.google.com/store/apps/details?id=com.euneus.fakegps" class="download-btn" target="_blank">
+                🏪 Download from Google Play Store
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>Simple GPS Spoofer - Your Location, Your Control</p>
+        <p>© 2024 - For testing and development purposes</p>
+    </div>
+</body>
+</html>
